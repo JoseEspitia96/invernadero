@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('America/Bogota');
 require('../vendor/autoload.php');
 
 $app = new Silex\Application();
@@ -21,5 +21,8 @@ $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
   return $app['twig']->render('index.twig');
 });
-
+$app->get('/fecha', function() use($app){
+  $app['monolog']->addDebug('logging output.');
+  return date('Y-m-d H:i:s');
+});
 $app->run();
