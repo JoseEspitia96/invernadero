@@ -21,7 +21,7 @@
 .navbar + .jumbotron {
   margin-top: -20px;
 }
-.jumbotron .lang-logo {
+.jumbotron .greenhouse {
   display: block;
   background: #B01302;
   border-radius: 50%;
@@ -31,6 +31,6 @@
   margin: auto;
   border: 2px solid white;
 }
-.jumbotron .lang-logo img {
+.jumbotron .greenhouse img {
   max-width: 100%;
 }
