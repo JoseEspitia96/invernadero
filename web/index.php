@@ -26,12 +26,13 @@ $app->get('/fecha', function() use($app){
   return date('Y-m-d H:i:s');
 });
 
-$app->get('/guardar/{humedad}', 
-	function($humedad) use($app){
+$app->get('/guardar/{humedad}/{temperatura}', 
+	function($humedad, $temperatura) use($app){
 	$dbconexion=pg_connect( "host=ec2-23-21-192-179.compute-1.amazonaws.com port=5432 dbname=d7668c6higkn8l user=dvtjsetxbqhets password=e805ee92c1736a560cb20ce9bd4f3f967fd85b6b4baa4c6ee2934bfece6430b0");
 	$registro=array (
 		"FECHA"=>date('Y-m-d H:i:s'),
-		"HUMEDADSUELO"=>$humedad);
+		"HUMEDADSUELO"=>$humedad,
+		"TEMPERATURA" =>$temperatura);
 	$resultado=pg_insert ($dbconexion,'PARAMETROS',$registro);
 	return date('Y-m-d H:i:s');
 
