@@ -20,12 +20,13 @@ $app->get('/fecha', function() use($app){
   $app['monolog']->addDebug('logging output.');
   return date('Y-m-d H:i:s');
 });
-$app->get('/guardar/{temperatura_ambiente}', 
-	function($temperatura_ambiente) use($app){
+$app->get('/guardar/{temperatura_ambiente}/{humedad_suelo}', 
+	function($temperatura_ambiente,$humedad_suelo) use($app){
 	$dbconexion=pg_connect( "host=ec2-23-21-192-179.compute-1.amazonaws.com port=5432 dbname=d7668c6higkn8l user=dvtjsetxbqhets password=e805ee92c1736a560cb20ce9bd4f3f967fd85b6b4baa4c6ee2934bfece6430b0");
 	$registro=array (
 		"FECHA"=>date('Y-m-d H:i:s'),
-		"TEMPERATURA"=>$temperatura_ambiente);
+		"TEMPERATURA"=>$temperatura_ambiente),
+		"HUMEDADSUELO"=>$humedad_suelo);
 	$resultado=pg_insert ($dbconexion,'PARAMETROS',$registro);
 	return date('Y-m-d H:i:s');
 	});
