@@ -121,6 +121,7 @@
           }
         ]
       }
+
     }
   }).render();
 });
@@ -144,8 +145,8 @@
     dataSource: {
         "chart": {
             "caption": "Temperature status of deep freezers",
-            "upperlimit": "-5",
-            "lowerlimit": "-60",
+            "upperlimit": "3000",
+            "lowerlimit": "0",
             "captionPadding": "30",
             "showshadow": "0",
             "showvalue": "1",
@@ -159,30 +160,36 @@
         },
         "colorrange": {
             "color": [{
-                "minvalue": "-60",
-                "maxvalue": "-35",
+                "minvalue": "0",
+                "maxvalue": "1000",
                 "label": "Mission control, <br> we have a situation!",
                 "code": "#ff0000"
             }, {
-                "minvalue": "-35",
-                "maxvalue": "-25",
+                "minvalue": "1000",
+                "maxvalue": "2000",
                 "label": "Something is just  not right!",
                 "code": "#ff9900"
             }, {
-                "minvalue": "-25",
-                "maxvalue": "-5",
+                "minvalue": "2000",
+                "maxvalue": "3000",
                 "label": "All well ahoy!",
                 "code": "#00ff00"
             }]
         },
-        "value": "-5"
+        "value": "800"
     },
     "events": {
         "rendered": function(evtObj, argObj) {
             evtObj.sender.chartInterval = setInterval(function() {
-                var num = (Math.floor(Math.random() * 55) * -1) - 5;
-evtObj.sender.feedData && evtObj.sender.feedData("&value=" + num);
-            }, 10000);
+            var num;
+                $.getJSON("/getInvernaderoData/1", function(result){
+                    obj = $.parseJSON(JSON.stringify(result));
+                    $.each(obj, function( iData, contentData ) {
+                        num = contentData.ILUMINACION;
+                    });
+                  });
+                    evtObj.sender.feedData && evtObj.sender.feedData("&value=" + num);
+            }, 1000);
         },
         "disposed": function(evt, arg) {
             clearInterval(evt.sender.chartInterval);
@@ -200,7 +207,11 @@ evtObj.sender.feedData && evtObj.sender.feedData("&value=" + num);
 <title> Termometro </title>
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+
+
 <script type="text/javascript">
+
+
     FusionCharts.ready(function(){
     var fusioncharts = new FusionCharts({
     type: 'thermometer',
@@ -264,16 +275,16 @@ evtObj.sender.feedData && evtObj.sender.feedData("&value=" + num);
                     });
                   });
                 evt.sender.feedData("&value=" + value);
-            }, 3000);
+            }, 1000);
             updateAnnotation = function(evtObj, argObj) {
                 var code,
                     chartObj = evtObj.sender,
                     val = chartObj.getData(),
                     annotations = chartObj.annotations;
 
-                if (val >= -4.5) {
+                if (val >= 30) {
                     code = "#00FF00";
-                } else if (val < -4.5 && val > -6) {
+                } else if (val < 30 && val > 10) {
                     code = "#ff9900";
                 } else {
                     code = "#ff0000";
