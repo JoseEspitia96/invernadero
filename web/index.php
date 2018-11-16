@@ -37,7 +37,7 @@ $app->get('/getInvernaderoData/{numberOfRecords}', function($numberOfRecords) us
   $app['monolog']->addDebug('logging output.');
 
   $dbconn = pg_connect( "host=ec2-23-21-192-179.compute-1.amazonaws.com port=5432 dbname=d7668c6higkn8l user=dvtjsetxbqhets password=e805ee92c1736a560cb20ce9bd4f3f967fd85b6b4baa4c6ee2934bfece6430b0");
-	$consult_db = pg_query($dbconn, 'SELECT * FROM PARAMETROS ORDER BY "date" DESC LIMIT ' . $numberOfRecords .'');
+	$consult_db = pg_query($dbconn, 'SELECT * FROM PARAMETROS ORDER BY "FECHA" DESC LIMIT ' . $numberOfRecords .'');
   
   $resultArray = array();
   while ($row = pg_fetch_array($consult_db, null, PGSQL_ASSOC)) {
