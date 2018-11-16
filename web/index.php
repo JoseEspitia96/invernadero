@@ -51,6 +51,6 @@ $app->get('/getInvernaderoData/{numberOfRecords}', function($numberOfRecords) us
   $response->setCharset('UTF-8');
   $response->headers->set('Content-Type', 'application/json');
 
-  return $response;
+  return $consult_db;
 });
 $app->run();  
