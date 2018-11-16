@@ -32,4 +32,25 @@ $app->get('/guardar/{temperatura}/{humedad_suelo}/{humedad_ambiente}/{luz}',
 	$resultado=pg_insert ($dbconexion,'PARAMETROS',$registro);
 	return date('Y-m-d H:i:s');
 	});
+
+$app->get('/getInvernaderoData/{numberOfRecords}', function($numberOfRecords) use($app){
+  $app['monolog']->addDebug('logging output.');
+
+  $dbconn = pg_connect( "host=ec2-23-21-192-179.compute-1.amazonaws.com port=5432 dbname=d7668c6higkn8l user=dvtjsetxbqhets password=e805ee92c1736a560cb20ce9bd4f3f967fd85b6b4baa4c6ee2934bfece6430b0");
+	$consult_db = pg_query($dbconn, 'SELECT * FROM PARAMETROS ORDER BY "date" DESC LIMIT ' . $numberOfRecords .'');
+  
+  $resultArray = array();
+  while ($row = pg_fetch_array($consult_db, null, PGSQL_ASSOC)) {
+    $resultArray[] = $row;
+  }
+
+  $jsonResult = json_encode($resultArray, JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
+
+  $response = new Response();
+  $response->setContent($jsonResult);
+  $response->setCharset('UTF-8');
+  $response->headers->set('Content-Type', 'application/json');
+
+  return $response;
+});
 $app->run();  

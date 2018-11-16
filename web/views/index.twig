@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+<!-- Invernadero -->
+
 {% block content %}
 <div class="jumbotron text-center">
   <div class="container">
@@ -204,8 +206,8 @@ evtObj.sender.feedData && evtObj.sender.feedData("&value=" + num);
     dataFormat: 'json',
     dataSource: {
         "chart": {
-            "caption": "Temperature Monitor",
-            "subcaption": " Central cold store",
+            "caption": "Monitor de Temperatura",
+            "subcaption": "Invernadero",
             "lowerLimit": "-10",
             "upperLimit": "0",
 
@@ -250,20 +252,14 @@ evtObj.sender.feedData && evtObj.sender.feedData("&value=" + num);
     "events": {
         "rendered": function(evt, arg) {
             evt.sender.dataUpdate = setInterval(function() {
-                var value,
-                    prevTemp = evt.sender.getData(),
-                    mainTemp = (Math.random() * 10) * (-1),
-                    diff = Math.abs(prevTemp - mainTemp);
-
-                diff = diff > 1 ? (Math.random() * 1) : diff;
-                if (mainTemp > prevTemp) {
-                    value = prevTemp + diff;
-                } else {
-                    value = prevTemp - diff;
-                }
-
+                
+                $.getJSON("/getInvernaderoData/1", function(result){
+                    obj = $.parseJSON(JSON.stringify(result));
+                    $.each(obj, function( iData, contentData ) {
+                        value = contentData.TEMPERATURA;
+                    });
+                  });
                 evt.sender.feedData("&value=" + value);
-
             }, 3000);
             updateAnnotation = function(evtObj, argObj) {
                 var code,
