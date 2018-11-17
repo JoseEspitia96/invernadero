@@ -154,7 +154,7 @@
             "placeValuesInside": "1",
             "valueFontSize": "16",
             //Tooltext
-            "plottooltext": "<span id='headerdiv' style='font-family:\"Arial\", \"Helvetica\";font-size: 13px;font-weight: bold;'>Current Temperature:</span>{br}<div id='valueDiv' style=' color: #EEEEEE; text-align:center;font-size: 25px; padding: 10px;  margin-top:5px; font-family:\"Arial\", \"Helvetica\"; font-weight: bold;'>$value°C</div>",
+            "plottooltext": "<span id='headerdiv' style='font-family:\"Arial\", \"Helvetica\";font-size: 13px;font-weight: bold;'>Iluminación actual:</span>{br}<div id='valueDiv' style=' color: #EEEEEE; text-align:center;font-size: 25px; padding: 10px;  margin-top:5px; font-family:\"Arial\", \"Helvetica\"; font-weight: bold;'>$value Lux</div>",
             //Theme
             "theme": "fusion"
         },
@@ -180,15 +180,15 @@
     },
     "events": {
         "rendered": function(evtObj, argObj) {
-            evtObj.sender.chartInterval = setInterval(function() {
-            var num;
+            evt.sender.dataUpdate = setInterval(function() {
+            var value;
                 $.getJSON("/getInvernaderoData/1", function(result){
                     obj = $.parseJSON(JSON.stringify(result));
                     $.each(obj, function( iData, contentData ) {
-                        num = contentData.ILUMINACION;
+                        value = contentData.ILUMINACION;
                     });
                   });
-                    evtObj.sender.feedData && evtObj.sender.feedData("&value=" + num);
+                    evt.sender.feedData("&value=" + value);
             }, 1000);
         },
         "disposed": function(evt, arg) {
