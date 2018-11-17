@@ -67,8 +67,8 @@
     dataFormat: 'json',
     dataSource: {
       "chart": {
-        "caption": "Average Customer Satisfaction Score",
-        "subcaption": "Last year vs Current year",
+        "caption": "HUMEDAD",
+        "subcaption": "Invernadero",
         "lowerLimit": "0",
         "upperLimit": "100",
         "valueFontSize": "16",
@@ -144,7 +144,7 @@
     dataFormat: 'json',
     dataSource: {
         "chart": {
-            "caption": "Temperature status of deep freezers",
+            "caption": "Iluminación",
             "upperlimit": "3000",
             "lowerlimit": "0",
             "captionPadding": "30",
@@ -162,21 +162,21 @@
             "color": [{
                 "minvalue": "0",
                 "maxvalue": "1000",
-                "label": "Mission control, <br> we have a situation!",
-                "code": "#ff0000"
+                "label": "Iluminación demasiado baja",
+                "code": "#111100"
             }, {
                 "minvalue": "1000",
                 "maxvalue": "2000",
-                "label": "Something is just  not right!",
-                "code": "#ff9900"
+                "label": "Iluminación regular",
+                "code": "#888800"
             }, {
                 "minvalue": "2000",
                 "maxvalue": "3000",
-                "label": "All well ahoy!",
-                "code": "#00ff00"
+                "label": "Iluminación alta",
+                "code": "#ffff00"
             }]
         },
-        "value": "800"
+        "value": "1200"
     },
     "events": {
         "rendered": function(evtObj, argObj) {
